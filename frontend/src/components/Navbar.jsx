@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { Link } from "react-router-dom";
 
 export default function Navbar() {
@@ -20,5 +21,17 @@ export default function Navbar() {
         </Link>
       </div>
     </nav>
+=======
+import { useAuth } from "../context/AuthContext";
+
+export default function Navbar() {
+  const { logout } = useAuth();
+
+  return (
+    <div className="bg-white p-4 shadow flex justify-between">
+      <h1 className="font-bold text-blue-600">NeuroPlanix</h1>
+      <button onClick={logout} className="text-red-600">Logout</button>
+    </div>
+>>>>>>> bc45777d495299e1a47cc4f12907bc447a7b05f1
   );
 }
