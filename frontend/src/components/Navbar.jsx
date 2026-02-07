@@ -1,14 +1,12 @@
-import { Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 export default function Navbar() {
+  const { logout } = useAuth();
+
   return (
-    <nav className="bg-white shadow px-6 py-3 flex justify-between">
+    <div className="bg-white p-4 shadow flex justify-between">
       <h1 className="font-bold text-blue-600">NeuroPlanix</h1>
-      <div className="space-x-4">
-        <Link to="/dashboard">Dashboard</Link>
-        <Link to="/profile">Profile</Link>
-        <Link to="/">Logout</Link>
-      </div>
-    </nav>
+      <button onClick={logout} className="text-red-600">Logout</button>
+    </div>
   );
 }
