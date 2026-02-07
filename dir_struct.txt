@@ -1,0 +1,107 @@
+NeuroPlanix/
+│
+├── frontend/                         # React + Tailwind CSS
+│   ├── public/
+│   │   └── index.html
+│   │
+│   ├── src/
+│   │   ├── assets/                   # Images, icons, logos
+│   │   │   └── logo.png
+│   │   │
+│   │   ├── components/               # Reusable UI components
+│   │   │   ├── Navbar.jsx
+│   │   │   ├── Sidebar.jsx
+│   │   │   ├── ProgressCard.jsx
+│   │   │   ├── TaskCard.jsx
+│   │   │   └── Loader.jsx
+│   │   │
+│   │   ├── pages/                    # Application screens
+│   │   │   ├── Login.jsx
+│   │   │   ├── Register.jsx
+│   │   │   ├── Dashboard.jsx
+│   │   │   ├── Profile.jsx
+│   │   │   ├── Subjects.jsx
+│   │   │   ├── StudyPlan.jsx
+│   │   │   ├── Tasks.jsx
+│   │   │   ├── AIChat.jsx
+│   │   │   ├── Motivation.jsx
+│   │   │   └── Internship.jsx
+│   │   │
+│   │   ├── routes/                   # Frontend routing
+│   │   │   └── AppRoutes.jsx
+│   │   │
+│   │   ├── services/                 # API calls
+│   │   │   ├── authService.js
+│   │   │   ├── studyPlanService.js
+│   │   │   ├── taskService.js
+│   │   │   ├── geminiService.js
+│   │   │   └── internshipService.js
+│   │   │
+│   │   ├── context/                  # Global state management
+│   │   │   ├── AuthContext.jsx
+│   │   │   └── StudyContext.jsx
+│   │   │
+│   │   ├── utils/                    # Helper functions
+│   │   │   └── formatDate.js
+│   │   │
+│   │   ├── App.jsx
+│   │   ├── main.jsx
+│   │   ├── index.css
+│   │
+│   ├── tailwind.config.js
+│   ├── postcss.config.js
+│   ├── package.json
+│   └── README.md
+│
+├── backend/                          # Node.js + Express
+│   ├── src/
+│   │   ├── config/                   # Configuration files
+│   │   │   ├── db.js                 # MongoDB connection
+│   │   │   └── gemini.js             # Gemini API config
+│   │   │
+│   │   ├── models/                   # MongoDB schemas
+│   │   │   ├── User.js
+│   │   │   ├── Subject.js
+│   │   │   ├── Task.js
+│   │   │   ├── StudyPlan.js
+│   │   │   └── Internship.js
+│   │   │
+│   │   ├── routes/                   # API routes
+│   │   │   ├── authRoutes.js
+│   │   │   ├── userRoutes.js
+│   │   │   ├── studyPlanRoutes.js
+│   │   │   ├── taskRoutes.js
+│   │   │   ├── geminiRoutes.js
+│   │   │   └── internshipRoutes.js
+│   │   │
+│   │   ├── controllers/              # Business logic
+│   │   │   ├── authController.js
+│   │   │   ├── userController.js
+│   │   │   ├── studyPlanController.js
+│   │   │   ├── taskController.js
+│   │   │   ├── geminiController.js
+│   │   │   └── internshipController.js
+│   │   │
+│   │   ├── middleware/               # Custom middleware
+│   │   │   ├── authMiddleware.js
+│   │   │   └── errorMiddleware.js
+│   │   │
+│   │   ├── utils/                    # Helper utilities
+│   │   │   └── generatePrompt.js
+│   │   │
+│   │   ├── app.js                    # Express app
+│   │   └── server.js                 # Server entry point
+│   │
+│   ├── package.json
+│   ├── .env
+│   └── README.md
+│
+├── docs/                             # Project documentation
+│   ├── Problem_Statement.pdf
+│   ├── System_Workflow.pdf
+│   ├── Architecture_Diagram.png
+│   ├── ER_Diagram.png
+│   └── UI_Screenshots/
+│
+├── .gitignore
+└── README.md
