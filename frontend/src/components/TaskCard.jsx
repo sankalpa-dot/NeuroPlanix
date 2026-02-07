@@ -1,24 +1,18 @@
-<<<<<<< HEAD
-export default function TaskCard({ task, onComplete }) {
+const TaskCard = ({ task, onToggle }) => {
   return (
-    <div className="bg-white p-4 rounded-lg shadow flex justify-between items-center mb-3">
-      <span className="text-gray-700">{task}</span>
-
-      <button
-        onClick={onComplete}
-        className="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600"
-      >
-        Done
-      </button>
-=======
-export default function TaskCard({ task, onDone }) {
-  return (
-    <div className="bg-white p-3 rounded shadow flex justify-between">
-      <span>{task.title}</span>
-      {!task.done && (
-        <button onClick={onDone} className="text-green-600">Done</button>
-      )}
->>>>>>> bc45777d495299e1a47cc4f12907bc447a7b05f1
+    <div className="bg-white rounded-lg shadow p-4 flex justify-between items-center">
+      <div>
+        <h3 className="font-medium">{task.title}</h3>
+        <p className="text-sm text-gray-500">{task.description}</p>
+      </div>
+      <input
+        type="checkbox"
+        checked={task.completed}
+        onChange={() => onToggle(task.id)}
+        className="w-5 h-5"
+      />
     </div>
   );
-}
+};
+
+export default TaskCard;
