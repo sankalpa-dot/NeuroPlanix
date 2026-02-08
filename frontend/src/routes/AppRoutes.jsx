@@ -1,6 +1,4 @@
-import { Routes, Route, Navigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
-
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import Dashboard from "../pages/Dashboard";
@@ -13,29 +11,20 @@ import Motivation from "../pages/Motivation";
 import Internship from "../pages/Internship";
 
 export default function AppRoutes() {
-  const { user } = useAuth();
-
-  if (!user) {
-    return (
+  return (
+    <BrowserRouter>
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="*" element={<Navigate to="/" />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/subjects" element={<Subjects />} />
+        <Route path="/study-plan" element={<StudyPlan />} />
+        <Route path="/tasks" element={<Tasks />} />
+        <Route path="/ai-chat" element={<AIChat />} />
+        <Route path="/motivation" element={<Motivation />} />
+        <Route path="/internship" element={<Internship />} />
       </Routes>
-    );
-  }
-
-  return (
-    <Routes>
-      <Route path="/dashboard" element={<Dashboard />} />
-      <Route path="/profile" element={<Profile />} />
-      <Route path="/subjects" element={<Subjects />} />
-      <Route path="/study-plan" element={<StudyPlan />} />
-      <Route path="/tasks" element={<Tasks />} />
-      <Route path="/ai-chat" element={<AIChat />} />
-      <Route path="/motivation" element={<Motivation />} />
-      <Route path="/internship" element={<Internship />} />
-      <Route path="*" element={<Navigate to="/dashboard" />} />
-    </Routes>
+    </BrowserRouter>
   );
 }
