@@ -1,12 +1,17 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function Login() {
+export default function Register() {
   const navigate = useNavigate();
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -14,11 +19,18 @@ export default function Login() {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
   };
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setError("");
 
-    if (!email || !password) {
+    const { name, email, password, confirmPassword } = formData;
+
+    if (!name || !email || !password || !confirmPassword) {
       setError("Please fill in all required fields.");
       return;
     }
@@ -28,7 +40,17 @@ export default function Login() {
       return;
     }
 
-    // Simulate login process (future API call goes here)
+    if (password.length < 6) {
+      setError("Password must be at least 6 characters long.");
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      setError("Passwords do not match.");
+      return;
+    }
+
+    // Simulate registration process (future API call goes here)
     setLoading(true);
 
     setTimeout(() => {
@@ -67,11 +89,31 @@ export default function Login() {
               <h1 className="text-4xl font-bold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
                 NeuroPlanix
               </h1>
-              <p className="text-gray-400 text-sm mt-2">Study Smart, Achieve More</p>
+              <p className="text-gray-400 text-sm mt-2">Join Your Learning Journey</p>
             </div>
 
             {/* Form */}
             <form onSubmit={handleSubmit} className="space-y-4">
+              {/* Name */}
+              <div>
+                <label
+                  htmlFor="name"
+                  className="block text-sm font-medium text-gray-300 mb-2"
+                >
+                  Full Name
+                </label>
+                <input
+                  id="name"
+                  name="name"
+                  type="text"
+                  placeholder="John Doe"
+                  value={formData.name}
+                  onChange={handleChange}
+                  className="w-full rounded-lg bg-slate-800/50 border border-slate-700/50 px-4 py-3 text-white placeholder-gray-500 outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
+                  required
+                />
+              </div>
+
               {/* Email */}
               <div>
                 <label
@@ -82,10 +124,11 @@ export default function Login() {
                 </label>
                 <input
                   id="email"
+                  name="email"
                   type="email"
                   placeholder="you@example.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  value={formData.email}
+                  onChange={handleChange}
                   className="w-full rounded-lg bg-slate-800/50 border border-slate-700/50 px-4 py-3 text-white placeholder-gray-500 outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
                   required
                 />
@@ -99,22 +142,56 @@ export default function Login() {
                 >
                   Password
                 </label>
+
                 <div className="relative">
                   <input
                     id="password"
+                    name="password"
                     type={showPassword ? "text" : "password"}
                     placeholder="••••••••"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    value={formData.password}
+                    onChange={handleChange}
                     className="w-full rounded-lg bg-slate-800/50 border border-slate-700/50 px-4 py-3 pr-12 text-white placeholder-gray-500 outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
                     required
                   />
+
                   <button
                     type="button"
                     onClick={() => setShowPassword((prev) => !prev)}
                     className="absolute right-4 top-1/2 -translate-y-1/2 text-xs text-indigo-400 hover:text-indigo-300 transition-colors"
                   >
                     {showPassword ? "Hide" : "Show"}
+                  </button>
+                </div>
+              </div>
+
+              {/* Confirm Password */}
+              <div>
+                <label
+                  htmlFor="confirmPassword"
+                  className="block text-sm font-medium text-gray-300 mb-2"
+                >
+                  Confirm Password
+                </label>
+
+                <div className="relative">
+                  <input
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    type={showConfirmPassword ? "text" : "password"}
+                    placeholder="••••••••"
+                    value={formData.confirmPassword}
+                    onChange={handleChange}
+                    className="w-full rounded-lg bg-slate-800/50 border border-slate-700/50 px-4 py-3 pr-12 text-white placeholder-gray-500 outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
+                    required
+                  />
+
+                  <button
+                    type="button"
+                    onClick={() => setShowConfirmPassword((prev) => !prev)}
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-xs text-indigo-400 hover:text-indigo-300 transition-colors"
+                  >
+                    {showConfirmPassword ? "Hide" : "Show"}
                   </button>
                 </div>
               </div>
@@ -126,24 +203,7 @@ export default function Login() {
                 </div>
               )}
 
-              {/* Remember & Forgot */}
-              <div className="flex items-center justify-between text-sm">
-                <label className="flex items-center gap-2 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    className="w-4 h-4 rounded border-slate-600 cursor-pointer"
-                  />
-                  <span className="text-gray-400">Remember me</span>
-                </label>
-                <button
-                  type="button"
-                  className="text-indigo-400 hover:text-indigo-300 transition-colors"
-                >
-                  Forgot password?
-                </button>
-              </div>
-
-              {/* Login Button */}
+              {/* Register Button */}
               <button
                 type="submit"
                 disabled={loading}
@@ -152,12 +212,12 @@ export default function Login() {
                 {loading ? (
                   <>
                     <span className="h-4 w-4 rounded-full border-2 border-white border-t-transparent animate-spin"></span>
-                    Logging in...
+                    Creating Account...
                   </>
                 ) : (
                   <>
-                    <span>🚀</span>
-                    Login
+                    <span>✨</span>
+                    Register
                   </>
                 )}
               </button>
@@ -173,21 +233,21 @@ export default function Login() {
               </div>
             </div>
 
-            {/* Register Link */}
+            {/* Login Link */}
             <p className="text-center text-sm text-gray-400">
-              Don't have an account?{" "}
+              Already have an account?{" "}
               <button
-                onClick={() => navigate("/register")}
+                onClick={() => navigate("/")}
                 className="text-indigo-400 hover:text-indigo-300 font-semibold transition-colors"
               >
-                Sign up here
+                Sign in here
               </button>
             </p>
           </div>
 
           {/* Footer Text */}
           <p className="text-center text-xs text-gray-500 mt-6">
-            By signing in, you agree to our Terms & Conditions
+            By registering, you agree to our Terms & Conditions
           </p>
         </div>
       </div>
