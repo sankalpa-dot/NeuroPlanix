@@ -2,7 +2,7 @@ NeuroPlanix/
 │
 ├── frontend/                         # React + Tailwind CSS
 │   ├── public/
-│   │   └── index.html
+│   │   └── vite.svg
 │   │
 │   ├── src/
 │   │   ├── assets/                   # Images, icons, logos
@@ -47,7 +47,7 @@ NeuroPlanix/
 │   │   ├── App.jsx
 │   │   ├── main.jsx
 │   │   ├── index.css
-│   │
+│   │   |__ index.html
 │   ├── tailwind.config.js
 │   ├── postcss.config.cjs
 │   ├── package.json
