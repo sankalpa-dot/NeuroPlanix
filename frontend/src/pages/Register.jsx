@@ -72,7 +72,7 @@ export default function Register() {
       <div className="relative z-10 w-full px-4 sm:px-6 lg:px-8">
         <div className="max-w-md mx-auto">
           {/* Glassmorphism Card */}
-          <div className="bg-slate-900/40 backdrop-blur-2xl border border-slate-700/50 rounded-2xl shadow-2xl p-8 sm:p-10 space-y-6">
+          <div className="card p-8 sm:p-10 space-y-6">
             {/* Logo Section */}
             <div className="text-center">
               <div className="w-16 h-16 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-indigo-500/40">
@@ -86,14 +86,14 @@ export default function Register() {
                   }}
                 />
               </div>
-              <h1 className="text-4xl font-bold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
+              <h1 className="h1 bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
                 NeuroPlanix
               </h1>
-              <p className="text-gray-400 text-sm mt-2">Join Your Learning Journey</p>
+              <p className="p text-gray-400 mt-2">Join Your Learning Journey</p>
             </div>
 
             {/* Form */}
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="form-grid">
               {/* Name */}
               <div>
                 <label
