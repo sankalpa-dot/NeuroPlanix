@@ -1,0 +1,76 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+      - 'frontend-v*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to release'
+        required: true
+        default: 'v1.0.0'
+
+jobs:
+  create-release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    
+    permissions:
+      contents: write
+      pages: write
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: 'npm'
+          cache-dependency-path: 'frontend/package-lock.json'
+      
+      - name: Install dependencies
+        working-directory: frontend
+        run: npm ci
+      
+      - name: Build frontend
+        working-directory: frontend
+        run: npm run build
+      
+      - name: Get version from tag
+        id: tag_name
+        run: |
+          VERSION=${GITHUB_REF#refs/tags/}
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+      
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          name: Release ${{ steps.tag_name.outputs.version }}
+          files: frontend/dist/**/*
+          draft: false
+          prerelease: false
+          body: |
+            # Release Notes for ${{ steps.tag_name.outputs.version }}
+            
+            ## Changes
+            See commits for detailed changes.
+            
+            ## Installation
+            Download the distribution files and extract them.
+            
+            ## Build Info
+            - **Node Version**: 20.x
+            - **Build Date**: ${{ github.event.head_commit.timestamp }}
+            - **Commit**: ${{ github.sha }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Release Summary
+        run: |
+          echo "🎉 Release created successfully!"
+          echo "📦 Version: ${{ steps.tag_name.outputs.version }}"
+          echo "📝 Commit: ${{ github.sha }}"

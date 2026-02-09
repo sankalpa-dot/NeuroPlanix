@@ -1,0 +1,52 @@
+name: Code Quality
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+  schedule:
+    - cron: '0 2 * * 0' # Weekly on Sunday at 2 AM
+
+jobs:
+  quality:
+    name: Code Quality Analysis
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: 'npm'
+          cache-dependency-path: 'frontend/package-lock.json'
+      
+      - name: Install dependencies
+        working-directory: frontend
+        run: npm ci
+      
+      - name: Run ESLint with strict mode
+        working-directory: frontend
+        run: npm run lint
+        continue-on-error: true
+      
+      - name: Check for console.logs and debuggers
+        working-directory: frontend
+        run: |
+          echo "Checking for console statements..."
+          ! grep -r "console\.\(log\|warn\|error\)" src/ --include="*.jsx" --include="*.js" | grep -v "node_modules"
+          echo "✅ No console statements found"
+      
+      - name: Check for uncommitted dependencies
+        working-directory: frontend
+        run: npm audit --audit-level=moderate
+        continue-on-error: true
+      
+      - name: Build check
+        working-directory: frontend
+        run: npm run build

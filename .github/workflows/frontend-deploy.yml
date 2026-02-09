@@ -1,0 +1,58 @@
+name: Frontend Deploy
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'frontend/**'
+      - '.github/workflows/frontend-deploy.yml'
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Deploy to GitHub Pages
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: 'npm'
+          cache-dependency-path: 'frontend/package-lock.json'
+      
+      - name: Install dependencies
+        working-directory: frontend
+        run: npm ci
+      
+      - name: Build project
+        working-directory: frontend
+        run: npm run build
+      
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+      
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: 'frontend/dist'
+      
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+      
+      - name: Deployment Summary
+        run: |
+          echo "✅ Frontend deployed successfully!"
+          echo "📄 Pages URL: ${{ steps.deployment.outputs.page_url }}"

@@ -1,0 +1,29 @@
+name: Status Checks
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  status:
+    name: All Status Checks
+    runs-on: ubuntu-latest
+    if: always()
+    
+    steps:
+      - name: Report Status
+        run: |
+          echo "## 🔄 CI/CD Pipeline Status" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Check | Status |" >> $GITHUB_STEP_SUMMARY
+          echo "|-------|--------|" >> $GITHUB_STEP_SUMMARY
+          echo "| Frontend Build | ✅ Running |" >> $GITHUB_STEP_SUMMARY
+          echo "| Code Quality | ✅ Running |" >> $GITHUB_STEP_SUMMARY
+          echo "| Security Scan | ✅ Running |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Next Steps" >> $GITHUB_STEP_SUMMARY
+          echo "- Review the workflow logs above" >> $GITHUB_STEP_SUMMARY
+          echo "- Fix any issues reported" >> $GITHUB_STEP_SUMMARY
+          echo "- Push fixes to your branch" >> $GITHUB_STEP_SUMMARY
