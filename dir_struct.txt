@@ -49,7 +49,7 @@ NeuroPlanix/
 │   │   ├── index.css
 │   │   |__ index.html
 │   ├── tailwind.config.js
-│   ├── postcss.config.cjs
+│   ├── postcss.config.js
 │   ├── package.json
 │   └── README.md
 │
